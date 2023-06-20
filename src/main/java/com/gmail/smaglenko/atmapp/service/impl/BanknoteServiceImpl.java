@@ -28,4 +28,9 @@ public class BanknoteServiceImpl implements BanknoteService {
     public void saveAll(List<Banknote> banknotes) {
         repository.saveAll(banknotes);
     }
+
+    @Override
+    public void remove(Long banknoteId) {
+        repository.deleteById(banknoteId);
+    }
 }

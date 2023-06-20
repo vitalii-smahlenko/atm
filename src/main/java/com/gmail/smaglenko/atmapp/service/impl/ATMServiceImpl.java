@@ -21,7 +21,7 @@ public class ATMServiceImpl implements ATMService {
     private final ATMRepository repository;
     private final BanknoteService banknoteService;
     private final BankAccountService bankAccountService;
-    private final Set<Integer> AVAILABLE_BANKNOTE_AT_ATM = Set.of(100, 200, 500);
+    private final Set<Integer> AVAILABLE_BANKNOTE_DENOMINATIONS_IN_THE_ATM = Set.of(100, 200, 500);
 
     @Override
     public ATM save(ATM atm) {
@@ -44,7 +44,7 @@ public class ATMServiceImpl implements ATMService {
         ATM atmFromDb = repository.findById(atmId)
                 .orElseThrow(() -> new RuntimeException("ATM not found"));
         for (Banknote banknote : banknotes) {
-            if (!AVAILABLE_BANKNOTE_AT_ATM.contains(banknote.getValue())) {
+            if (!AVAILABLE_BANKNOTE_DENOMINATIONS_IN_THE_ATM.contains(banknote.getValue())) {
                 throw new RuntimeException("An invalid amount. The amount must be a multiple"
                         + " of 100, 200, 500.");
             }
@@ -85,8 +85,8 @@ public class ATMServiceImpl implements ATMService {
             throw new RuntimeException("An invalid amount. The amount must be a multiple"
                     + " of 100, 200, 500.");
         }
-        List<Banknote> banknotes = withdrawBanknotesInAmountOf(atm.getBanknotes(), amount);
-        repository.updateBanknotes(atm.getId(), banknotes);
+        List<Banknote> banknotes = getBanknotesOnAmount(atm.getBanknotes(), amount);
+        banknotes.stream().map(Banknote::getId).forEach(banknoteService::remove);
         bankAccount.setBalance(bankAccount.getBalance().subtract(new BigDecimal(amount)));
         bankAccountService.update(bankAccount);
     }
@@ -98,13 +98,13 @@ public class ATMServiceImpl implements ATMService {
         );
     }
 
-    private List<Banknote> withdrawBanknotesInAmountOf(List<Banknote> banknotes, int amount) {
-        List<Banknote> result = new ArrayList<>(banknotes);
+    private List<Banknote> getBanknotesOnAmount(List<Banknote> banknotes, int amount) {
+        List<Banknote> result = new ArrayList<>();
         int balanceAmount = amount;
-        for (int i = result.size() - 1; i >= 0; i--) {
-            int value = result.get(i).getValue();
+        for (int i = banknotes.size() - 1; i >= 0; i--) {
+            int value = banknotes.get(i).getValue();
             if (value <= balanceAmount) {
-                result.remove(i);
+                result.add(banknotes.get(i));
                 balanceAmount -= value;
             }
         }
@@ -116,7 +116,7 @@ public class ATMServiceImpl implements ATMService {
     }
 
     private boolean isAmountMultipleOfAvailableBanknotes(Integer amount) {
-        for (int denomination : AVAILABLE_BANKNOTE_AT_ATM) {
+        for (int denomination : AVAILABLE_BANKNOTE_DENOMINATIONS_IN_THE_ATM) {
             if (amount % denomination == 0) {
                 return true;
             }

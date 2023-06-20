@@ -9,4 +9,7 @@ public interface BanknoteService {
     Banknote findByValue(int value);
 
     void saveAll(List<Banknote> banknotes);
+
+    void remove(Long banknoteId);
+
 }

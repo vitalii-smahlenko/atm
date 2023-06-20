@@ -8,4 +8,5 @@ public interface BankAccountService {
     BankAccount update(BankAccount bankAccount);
 
     BankAccount findById(Long bankAccountId);
+
 }
