@@ -10,12 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "atms")
 @Getter
-@Setter
 public class ATM {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

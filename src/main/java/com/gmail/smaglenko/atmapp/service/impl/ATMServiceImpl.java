@@ -21,7 +21,7 @@ public class ATMServiceImpl implements ATMService {
     private final ATMRepository repository;
     private final BanknoteService banknoteService;
     private final BankAccountService bankAccountService;
-    private final Set<Integer> AVAILABLE_BANKNOTE_DENOMINATIONS_IN_THE_ATM = Set.of(100, 200, 500);
+    private static final Set<Integer> AVAILABLE_BANKNOTE_DENOMINATIONS_IN_THE_ATM = Set.of(100, 200, 500);
 
     @Override
     public ATM save(ATM atm) {
@@ -30,7 +30,7 @@ public class ATMServiceImpl implements ATMService {
 
     @Override
     public List<Banknote> getAllBanknotes(Long atmId) {
-        return repository.getById(atmId).getBanknotes();
+        return findById(atmId).getBanknotes();
     }
 
     @Override

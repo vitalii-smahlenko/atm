@@ -13,6 +13,6 @@ public class UserDto {
     private Long id;
     private String username;
     private String password;
-    private Set<Role> roles= new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
     private List<BankAccount> bankAccounts = new ArrayList<>();
 }

@@ -22,7 +22,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Треба перевірити всі посилання
         http
                 .csrf().disable()
                 .authorizeRequests()
@@ -32,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/atm/deposit", "/atm/withdraw")
                 .hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/atm/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/user/**").hasRole("ADMIN")
                 .and()
                 .httpBasic()
                 .and()

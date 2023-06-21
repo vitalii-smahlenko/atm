@@ -5,7 +5,6 @@ import com.gmail.smaglenko.atmapp.model.Role.RoleName;
 import com.gmail.smaglenko.atmapp.model.User;
 import com.gmail.smaglenko.atmapp.service.RoleService;
 import com.gmail.smaglenko.atmapp.service.UserService;
-import java.util.Optional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,7 +28,7 @@ public class AtmAppApplication {
         return args -> {
             Role role = new Role();
             role.setRoleName(RoleName.ADMIN);
-            role = roleService.add(role);
+            role = roleService.save(role);
             User admin = new User();
             admin.setUsername("admin");
             admin.setPassword("admin");

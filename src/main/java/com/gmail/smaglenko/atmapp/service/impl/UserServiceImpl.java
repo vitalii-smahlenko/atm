@@ -1,8 +1,10 @@
 package com.gmail.smaglenko.atmapp.service.impl;
 
 import com.gmail.smaglenko.atmapp.model.Role;
+import com.gmail.smaglenko.atmapp.model.Role.RoleName;
 import com.gmail.smaglenko.atmapp.model.User;
 import com.gmail.smaglenko.atmapp.repository.UserRepository;
+import com.gmail.smaglenko.atmapp.service.RoleService;
 import com.gmail.smaglenko.atmapp.service.UserService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -41,10 +44,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User addRoleToUser(Long userId, Role role) {
+    public User addRoleToUser(Long userId, RoleName roleName) {
         User userFromDb = repository.findById(userId).orElseThrow(
                 () -> new RuntimeException("Can't find user by ID " + userId)
         );
+        Role role = roleService.findByRoleName(roleName);
         userFromDb.getRoles().add(role);
         return repository.save(userFromDb);
     }

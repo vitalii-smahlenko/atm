@@ -1,7 +1,6 @@
 package com.gmail.smaglenko.atmapp.service.impl;
 
 import com.gmail.smaglenko.atmapp.model.BankAccount;
-import com.gmail.smaglenko.atmapp.model.Banknote;
 import com.gmail.smaglenko.atmapp.model.User;
 import com.gmail.smaglenko.atmapp.repository.BankAccountRepository;
 import com.gmail.smaglenko.atmapp.service.BankAccountService;

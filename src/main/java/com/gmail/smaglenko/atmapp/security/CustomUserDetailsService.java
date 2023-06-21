@@ -1,6 +1,5 @@
 package com.gmail.smaglenko.atmapp.security;
 
-import com.gmail.smaglenko.atmapp.model.Role;
 import com.gmail.smaglenko.atmapp.model.User;
 import com.gmail.smaglenko.atmapp.service.UserService;
 import lombok.RequiredArgsConstructor;

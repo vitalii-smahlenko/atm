@@ -4,7 +4,7 @@ import com.gmail.smaglenko.atmapp.model.Role;
 import com.gmail.smaglenko.atmapp.model.Role.RoleName;
 
 public interface RoleService {
-    Role add(Role role);
+    Role save(Role role);
 
     Role findByRoleName(RoleName roleName);
 }

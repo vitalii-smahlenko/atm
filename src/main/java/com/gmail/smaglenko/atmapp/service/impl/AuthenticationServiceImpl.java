@@ -30,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (role == null) {
             role = new Role();
             role.setRoleName(RoleName.USER);
-            role = roleService.add(role);
+            role = roleService.save(role);
         }
         User user = new User();
         user.setUsername(username);

@@ -13,15 +13,10 @@ public class BanknoteServiceImpl implements BanknoteService {
     private final BanknoteRepository repository;
 
     @Override
-    public Banknote createBanknote(int value) {
+    public Banknote save(int value) {
         Banknote banknote = new Banknote();
         banknote.setValue(value);
         return repository.save(banknote);
-    }
-
-    @Override
-    public Banknote findByValue(int value) {
-        return repository.findByValue(value);
     }
 
     @Override
