@@ -21,7 +21,7 @@ public class ATMServiceImpl implements ATMService {
     private final ATMRepository repository;
     private final BanknoteService banknoteService;
     private final BankAccountService bankAccountService;
-    private static final Set<Integer> AVAILABLE_BANKNOTE_DENOMINATIONS_IN_THE_ATM = Set.of(100, 200, 500);
+    private static final Set<Integer> BANKNOTES_ACCEPTED_BY_ATM = Set.of(100, 200, 500);
 
     @Override
     public ATM save(ATM atm) {
@@ -44,7 +44,7 @@ public class ATMServiceImpl implements ATMService {
         ATM atmFromDb = repository.findById(atmId)
                 .orElseThrow(() -> new RuntimeException("ATM not found"));
         for (Banknote banknote : banknotes) {
-            if (!AVAILABLE_BANKNOTE_DENOMINATIONS_IN_THE_ATM.contains(banknote.getValue())) {
+            if (!BANKNOTES_ACCEPTED_BY_ATM.contains(banknote.getValue())) {
                 throw new RuntimeException("An invalid amount. The amount must be a multiple"
                         + " of 100, 200, 500.");
             }
@@ -73,7 +73,7 @@ public class ATMServiceImpl implements ATMService {
         Integer atmBalance = getATMBalance(atmId);
         if (atmBalance < amount) {
             throw new RuntimeException("Sorry, the transaction could not be completed due to "
-                    + "insufficient funds in the ATM. Insufficient funds, try withdrawing "
+                    + "not enough money in the ATM. Insufficient funds, try withdrawing "
                     + "a smaller amount.");
         }
         ATM atm = findById(atmId);
@@ -116,7 +116,7 @@ public class ATMServiceImpl implements ATMService {
     }
 
     private boolean isAmountMultipleOfAvailableBanknotes(Integer amount) {
-        for (int denomination : AVAILABLE_BANKNOTE_DENOMINATIONS_IN_THE_ATM) {
+        for (int denomination : BANKNOTES_ACCEPTED_BY_ATM) {
             if (amount % denomination == 0) {
                 return true;
             }

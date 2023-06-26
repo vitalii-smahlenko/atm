@@ -34,7 +34,6 @@ public class AtmAppApplication {
             admin.setPassword("admin");
             admin.getRoles().add(role);
             userService.save(admin);
-
         };
     }
 }

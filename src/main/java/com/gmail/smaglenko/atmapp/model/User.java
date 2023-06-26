@@ -24,24 +24,22 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name = "users")
 @Getter
-@Setter
 public class User {
     @Id
-    @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Setter
     @Column(nullable = false)
     private String username;
+    @Setter
     @Column(nullable = false)
     private String password;
-    @Setter(AccessLevel.NONE)
     @Fetch(FetchMode.JOIN)
     @ManyToMany
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-    @Setter(AccessLevel.NONE)
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<BankAccount> bankAccounts = new ArrayList<>();
