@@ -26,9 +26,9 @@ User features in ATM application :
 - Register;
 - Authorization;
 - The user can create a bank account;
-- The User can deposit money to his bank account;
-- The User can withdraw money from bank account;
-- The User can transfer money from their bank account to another user's bank account.
+- The User can deposit money to a bank account via ATM;
+- The User can withdraw money from bank account via ATM;
+- The User can transfer money from one bank account to another bank account.
 
 The application is developed in N-Tier Architecture
 ----
@@ -67,3 +67,4 @@ Technologies
 - Mockito
 - Lombok
 - MapStruct
+- Swagger http://localhost:8080/swagger-ui.html

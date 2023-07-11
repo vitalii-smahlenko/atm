@@ -25,7 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/registration", "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/registration", "/login", "/swagger-ui")
+                .permitAll()
                 .antMatchers(HttpMethod.GET, "/h2-console").permitAll()
                 .antMatchers(HttpMethod.POST, "/bank_account/**", "/transaction")
                 .hasRole("USER")

@@ -5,6 +5,7 @@ import com.gmail.smaglenko.atmapp.dto.BanknoteDto;
 import com.gmail.smaglenko.atmapp.service.ATMService;
 import com.gmail.smaglenko.atmapp.service.mapper.ATMDtoMapper;
 import com.gmail.smaglenko.atmapp.service.mapper.BanknoteDtoMapper;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +25,15 @@ public class ATMController {
     private final ATMDtoMapper atmDtoMapper;
     private final BanknoteDtoMapper banknoteDtoMapper;
 
+    @ApiOperation(value = "Create an ATM.",
+            response = ATMDto.class)
     @PostMapping("/create")
     public ATMDto createAtm(@RequestBody ATMDto dto) {
         return atmDtoMapper.mapToDto(atmService.save(atmDtoMapper.mapToModel(dto)));
     }
 
+    @ApiOperation(value = "Replenish the ATM",
+            response = String.class)
     @PostMapping("/add-money/atm/{atmId}")
     public String addMoneyToAtm(@PathVariable(name = "atmId") Long atmId,
                                 @RequestBody List<BanknoteDto> banknotes) {
@@ -39,6 +44,8 @@ public class ATMController {
         return "ATM replenished successfully";
     }
 
+    @ApiOperation(value = "Deposit money to a bank account via ATM",
+            response = String.class)
     @PutMapping("/deposit/atm/{atmId}/bank-account/{bankAccountId}")
     public String deposit(@PathVariable Long atmId,
                           @PathVariable Long bankAccountId,
@@ -50,6 +57,8 @@ public class ATMController {
         return "The operation was successful!";
     }
 
+    @ApiOperation(value = "Withdraw money from bank account via ATM",
+            response = String.class)
     @PutMapping("/withdraw/atm/{atmId}/bank-account/{bankAccountId}/amount/{amount}")
     public String withdraw(@PathVariable Long atmId,
                            @PathVariable Long bankAccountId,
@@ -58,6 +67,8 @@ public class ATMController {
         return "The operation was successful!";
     }
 
+    @ApiOperation(value = "Get information about which banknotes are in the ATM",
+            response = BanknoteDto.class)
     @GetMapping("/get-all-banknotes/{atmId}")
     public List<BanknoteDto> getAllBanknotes(@PathVariable Long atmId) {
         return atmService.getAllBanknotes(atmId).stream()
