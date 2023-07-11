@@ -2,7 +2,6 @@ package com.gmail.smaglenko.atmapp.controller;
 
 import com.gmail.smaglenko.atmapp.dto.ATMDto;
 import com.gmail.smaglenko.atmapp.dto.BanknoteDto;
-import com.gmail.smaglenko.atmapp.model.Banknote;
 import com.gmail.smaglenko.atmapp.service.ATMService;
 import com.gmail.smaglenko.atmapp.service.mapper.ATMDtoMapper;
 import com.gmail.smaglenko.atmapp.service.mapper.BanknoteDtoMapper;
@@ -31,7 +30,7 @@ public class ATMController {
     }
 
     @PostMapping("/add-money/atm/{atmId}")
-    public String addMoneyToAtm(@PathVariable Long atmId,
+    public String addMoneyToAtm(@PathVariable(name = "atmId") Long atmId,
                                 @RequestBody List<BanknoteDto> banknotes) {
         atmService.addBanknotesToATM(atmId,
                 banknotes.stream()
@@ -43,8 +42,11 @@ public class ATMController {
     @PutMapping("/deposit/atm/{atmId}/bank-account/{bankAccountId}")
     public String deposit(@PathVariable Long atmId,
                           @PathVariable Long bankAccountId,
-                          @RequestBody List<Banknote> banknotes) {
-        atmService.deposit(atmId, bankAccountId, banknotes);
+                          @RequestBody List<BanknoteDto> banknotes) {
+        atmService.deposit(atmId, bankAccountId,
+                banknotes.stream()
+                        .map(banknoteDtoMapper::mapToModel)
+                        .collect(Collectors.toList()));
         return "The operation was successful!";
     }
 

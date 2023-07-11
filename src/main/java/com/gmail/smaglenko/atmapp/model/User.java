@@ -24,14 +24,13 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name = "users")
 @Getter
+@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Setter
     @Column(nullable = false)
     private String username;
-    @Setter
     @Column(nullable = false)
     private String password;
     @Fetch(FetchMode.JOIN)

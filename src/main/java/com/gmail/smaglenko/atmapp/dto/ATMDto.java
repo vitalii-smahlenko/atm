@@ -3,7 +3,9 @@ package com.gmail.smaglenko.atmapp.dto;
 import com.gmail.smaglenko.atmapp.model.Banknote;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter

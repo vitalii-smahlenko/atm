@@ -171,8 +171,6 @@ class ATMServiceImplTest {
         atm.getBanknotes().addAll(banknotes);
 
         when(atmService.getATMBalance(ID)).thenReturn(atmBalance);
-        when(repository.findById(ID)).thenReturn(Optional.of(atm));
-        when(bankAccountService.findById(ID)).thenReturn(bankAccount);
 
         assertThrows(RuntimeException.class,
                 () -> atmService.withdraw(ID, ID, amount)

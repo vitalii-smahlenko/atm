@@ -29,7 +29,7 @@ public class Transaction {
     private BigDecimal amount;
 
     @Setter(AccessLevel.NONE)
-    @Column(nullable = false)
+    @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -27,9 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/registration", "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/h2-console").permitAll()
-                .antMatchers(HttpMethod.POST, "/bank_account/**").hasRole("USER")
-                .antMatchers(HttpMethod.PUT, "/atm/deposit", "/atm/withdraw")
+                .antMatchers(HttpMethod.POST, "/bank_account/**", "/transaction")
                 .hasRole("USER")
+                .antMatchers(HttpMethod.PUT, "/atm/deposit", "/atm/withdraw",
+                        "/transaction/**").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/atm/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/user/**").hasRole("ADMIN")
                 .and()

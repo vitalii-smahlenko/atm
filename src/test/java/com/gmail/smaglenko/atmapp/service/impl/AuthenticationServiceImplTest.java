@@ -46,7 +46,7 @@ class AuthenticationServiceImplTest {
     }
 
     @Test
-    void register_shouldWorkWell_withCorrectCredentials() {
+    void register_shouldWorkWell_whenCorrectCredentials() {
         when(roleService.findByRoleName(RoleName.USER)).thenReturn(role);
         when(userService.save(any())).thenReturn(expected);
 
@@ -65,7 +65,7 @@ class AuthenticationServiceImplTest {
     }
 
     @Test
-    void login_shouldWorkWell_withCorrectCredentials() {
+    void login_shouldWorkWell_whenCorrectCredentials() {
         when(userService.findByUsername(USERNAME)).thenReturn(Optional.of(expected));
 
         User actual = authenticationService.login(USERNAME, PASSWORD);
@@ -74,7 +74,7 @@ class AuthenticationServiceImplTest {
     }
 
     @Test
-    void login_shouldThrowsException_withIncorrectCredentials() {
+    void login_shouldThrowsException_whenIncorrectCredentials() {
         assertThrows(RuntimeException.class,
                 () -> authenticationService.login(USERNAME, PASSWORD)
         );
