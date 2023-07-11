@@ -38,18 +38,18 @@ The application is developed in N-Tier Architecture
 
 For easy testing, you can use the following instruction
 ----
-- To register a user, you need to send a POST-request to: http://localhost:8080/register with the body {"username": "Vitalii", "password": "1234"}. Content-Type: application/json;
-- To Authorization a user, you need to send a POST-request to: http://localhost:8080/login with the body {"username": "Vitalii", "password": "1234"}. Content-Type: application/json;
-### To make the following requests, you must be logged in as an administrator
-- To create an ATM, you need to send a POST-request to: http://localhost:8080/atm/create with the body {"banknotes": []}. Content-Type: application/json;
-- To replenish the ATM, you need to send a POST-request to: http://localhost:8080/atm/add-money/atm/1 with the body [{"value": 100}, {"value": 100}, {"value": 200}, {"value": 200}, {"value": 500}, {"value": 500}]. Content-Type: application/json;
-- To get information about which banknotes are in the ATM, you need to send a GET-request to: http://localhost:8080/atm/get-all-banknotes/1
-- To add role to User, you need to send a PUT-request to: http://localhost:8080/user/add-role-to-user/3/role/ADMIN
-### To make the following requests, you must be logged in as a user
-- To create a bank account, you need to send a POST-request to: http://localhost:8080/bank_account/create/user/3
-- To deposit money to his bank account, you need to send a PUT-request to: http://localhost:8080/atm/deposit/atm/1/bank-account/1 with the body [{"value": 100}, {"value": 200}, {"value": 500}]. Content-Type: application/json;
-- To withdraw money from bank account, you need to send a PUT-request to: http://localhost:8080/atm/withdraw/atm/1/bank-account/1/amount/300
-- To transfer money from one bank account to another bank account, you need to send a PUT-request to: http://localhost:8080/transaction/transfer-money/from-account/1/to-account/2/amount/500
+| Method | URL                                                                                      |                                                 Body                                                  |   Content-Type   | Description                                                  | Authorization  |
+|:------:|:-----------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------:|:----------------:|:-------------------------------------------------------------|:--------------:|
+|  POST  | http://localhost:8080/register                                                           |                              {"username": "Vitalii", "password": "1234"}                              | application/json | Register a user                                              |   Permit all   |
+|  POST  | http://localhost:8080/login                                                              |                              {"username": "Vitalii", "password": "1234"}                              | application/json | Authorization a user                                         |   Permit all   |
+|  POST  | http://localhost:8080/atm/create                                                         |                                           {"banknotes": []}                                           | application/json | Create an ATM                                                |     ADMIN      |
+|  POST  | http://localhost:8080/atm/add-money/atm/1                                                | [{"value": 100}, {"value": 100}, {"value": 200}, <br/>{"value": 200}, {"value": 500}, {"value": 500}] | application/json | Replenish the ATM                                            |     ADMIN      |
+|  GET   | http://localhost:8080/atm/get-all-banknotes/1                                            |                                                   -                                                   |        -         | Get information about which banknotes are in the ATM         |     ADMIN      |
+|  PUT   | http://localhost:8080/user/add-role-to-user/3/role/ADMIN                                 |                                                   -                                                   |        -         | Add role to User                                             |     ADMIN      |
+|  POST  | http://localhost:8080/bank_account/create/user/3                                         |                                                   -                                                   |        -         | Create a bank account                                        |      USER      |
+|  PUT   | http://localhost:8080/atm/deposit/atm/1/bank-account/1                                   |                           [{"value": 100}, {"value": 200}, {"value": 500}]                            | application/json | Deposit money to his bank account                            |      USER      |
+|  PUT   | http://localhost:8080/atm/withdraw/atm/1/bank-account/1/amount/300                       |                                                   -                                                   |        -         | Withdraw money from bank account                             |      USER      |
+|  PUT   | http://localhost:8080/transaction/transfer-money/from-account/1/to-account/2/amount/500  |                                                   -                                                   |        -         | Transfer money from one bank account to another bank account |      USER      |
 
 ### *If you will be using Postman for testing, you can also use:*  
 https://red-moon-54652.postman.co/workspace/Team-Workspace~cfed11ce-5b08-4497-872f-e9df998fc0f2/collection/25447589-67276792-eee2-4d2e-9568-3761f61302e3?action=share&creator=25447589
