@@ -8,6 +8,7 @@ import com.gmail.smaglenko.atmapp.service.TransactionService;
 import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final BankAccountService bankAccountService;
 
     @Override
+    @Transactional
     public void transferMoney(Long sourceAccountId, Long destinationAccountId, BigDecimal amount) {
         BankAccount sourceAccount = bankAccountService.findById(sourceAccountId);
         BankAccount destinationAccount = bankAccountService.findById(destinationAccountId);

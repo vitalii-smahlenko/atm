@@ -12,7 +12,7 @@ import org.hamcrest.Matchers;
 import org.springframework.security.test.context.support.WithMockUser;
 import com.gmail.smaglenko.atmapp.model.Role.RoleName;
 import com.gmail.smaglenko.atmapp.service.UserService;
-import com.gmail.smaglenko.atmapp.service.mapper.UserDtoMapper;
+import com.gmail.smaglenko.atmapp.util.mapper.UserDtoMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

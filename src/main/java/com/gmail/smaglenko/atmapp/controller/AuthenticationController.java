@@ -2,7 +2,7 @@ package com.gmail.smaglenko.atmapp.controller;
 
 import com.gmail.smaglenko.atmapp.dto.UserDto;
 import com.gmail.smaglenko.atmapp.service.AuthenticationService;
-import com.gmail.smaglenko.atmapp.service.mapper.UserDtoMapper;
+import com.gmail.smaglenko.atmapp.util.mapper.UserDtoMapper;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

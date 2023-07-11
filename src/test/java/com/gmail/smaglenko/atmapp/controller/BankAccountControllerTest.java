@@ -8,7 +8,7 @@ import com.gmail.smaglenko.atmapp.dto.BankAccountDto;
 import com.gmail.smaglenko.atmapp.model.BankAccount;
 import com.gmail.smaglenko.atmapp.service.RoleService;
 import com.gmail.smaglenko.atmapp.service.UserService;
-import com.gmail.smaglenko.atmapp.service.mapper.BankAccountDtoMapper;
+import com.gmail.smaglenko.atmapp.util.mapper.BankAccountDtoMapper;
 import com.gmail.smaglenko.atmapp.service.BankAccountService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;

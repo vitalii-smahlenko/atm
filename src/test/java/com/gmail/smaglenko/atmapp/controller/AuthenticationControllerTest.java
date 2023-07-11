@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.gmail.smaglenko.atmapp.model.User;
 import com.gmail.smaglenko.atmapp.service.RoleService;
 import com.gmail.smaglenko.atmapp.service.UserService;
-import com.gmail.smaglenko.atmapp.service.mapper.UserDtoMapper;
+import com.gmail.smaglenko.atmapp.util.mapper.UserDtoMapper;
 import com.gmail.smaglenko.atmapp.dto.UserDto;
 import com.gmail.smaglenko.atmapp.service.AuthenticationService;
 import org.hamcrest.Matchers;

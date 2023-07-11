@@ -2,7 +2,7 @@ package com.gmail.smaglenko.atmapp.controller;
 
 import com.gmail.smaglenko.atmapp.dto.BankAccountDto;
 import com.gmail.smaglenko.atmapp.service.BankAccountService;
-import com.gmail.smaglenko.atmapp.service.mapper.BankAccountDtoMapper;
+import com.gmail.smaglenko.atmapp.util.mapper.BankAccountDtoMapper;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,4 +1,4 @@
-package com.gmail.smaglenko.atmapp.service.mapper;
+package com.gmail.smaglenko.atmapp.util.mapper;
 
 import com.gmail.smaglenko.atmapp.dto.UserDto;
 import com.gmail.smaglenko.atmapp.model.User;
