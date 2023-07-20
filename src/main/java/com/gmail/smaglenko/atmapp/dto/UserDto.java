@@ -18,5 +18,5 @@ public class UserDto {
     private String username;
     private String password;
     private Set<Role> roles = new HashSet<>();
-    private List<BankAccount> bankAccounts = new ArrayList<>();
+    private List<BankAccountDto> bankAccounts = new ArrayList<>();
 }

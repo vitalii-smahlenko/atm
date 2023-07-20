@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,36 +36,36 @@ public class ATMController {
     @ApiOperation(value = "Replenish the ATM",
             response = String.class)
     @PostMapping("/add-money/atm/{atmId}")
-    public String addMoneyToAtm(@PathVariable(name = "atmId") Long atmId,
-                                @RequestBody List<BanknoteDto> banknotes) {
+    public ResponseEntity<String> addMoneyToAtm(@PathVariable(name = "atmId") Long atmId,
+                                                @RequestBody List<BanknoteDto> banknotes) {
         atmService.addBanknotesToATM(atmId,
                 banknotes.stream()
                         .map(banknoteDtoMapper::mapToModel)
                         .collect(Collectors.toList()));
-        return "ATM replenished successfully";
+        return ResponseEntity.ok("ATM replenished successfully") ;
     }
 
     @ApiOperation(value = "Deposit money to a bank account via ATM",
             response = String.class)
     @PutMapping("/deposit/atm/{atmId}/bank-account/{bankAccountId}")
-    public String deposit(@PathVariable Long atmId,
-                          @PathVariable Long bankAccountId,
-                          @RequestBody List<BanknoteDto> banknotes) {
+    public ResponseEntity<String> deposit(@PathVariable Long atmId,
+                                          @PathVariable Long bankAccountId,
+                                          @RequestBody List<BanknoteDto> banknotes) {
         atmService.deposit(atmId, bankAccountId,
                 banknotes.stream()
                         .map(banknoteDtoMapper::mapToModel)
                         .collect(Collectors.toList()));
-        return "The operation was successful!";
+        return ResponseEntity.ok("The operation was successful!");
     }
 
     @ApiOperation(value = "Withdraw money from bank account via ATM",
             response = String.class)
     @PutMapping("/withdraw/atm/{atmId}/bank-account/{bankAccountId}/amount/{amount}")
-    public String withdraw(@PathVariable Long atmId,
-                           @PathVariable Long bankAccountId,
-                           @PathVariable Integer amount) {
+    public ResponseEntity<String> withdraw(@PathVariable Long atmId,
+                                           @PathVariable Long bankAccountId,
+                                           @PathVariable Integer amount) {
         atmService.withdraw(atmId, bankAccountId, amount);
-        return "The operation was successful!";
+        return ResponseEntity.ok("The operation was successful!");
     }
 
     @ApiOperation(value = "Get information about which banknotes are in the ATM",
