@@ -6,6 +6,7 @@ import com.gmail.smaglenko.atmapp.model.User;
 import com.gmail.smaglenko.atmapp.repository.UserRepository;
 import com.gmail.smaglenko.atmapp.service.RoleService;
 import com.gmail.smaglenko.atmapp.service.UserService;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long userId) {
         return repository.findById(userId).orElseThrow(
-                () -> new RuntimeException("Can't find user by ID " + userId)
+                () -> new NoSuchElementException("Can't find user by ID " + userId)
         );
     }
 
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User addRoleToUser(Long userId, RoleName roleName) {
         User userFromDb = repository.findById(userId).orElseThrow(
-                () -> new RuntimeException("Can't find user by ID " + userId)
+                () -> new NoSuchElementException("Can't find user by ID " + userId)
         );
         Role role = roleService.findByRoleName(roleName);
         userFromDb.getRoles().add(role);

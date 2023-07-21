@@ -1,5 +1,6 @@
 package com.gmail.smaglenko.atmapp.service.impl;
 
+import com.gmail.smaglenko.atmapp.exception.NotEnoughMoneyException;
 import com.gmail.smaglenko.atmapp.model.BankAccount;
 import com.gmail.smaglenko.atmapp.model.Transaction;
 import com.gmail.smaglenko.atmapp.repository.TransactionRepository;
@@ -22,7 +23,7 @@ public class TransactionServiceImpl implements TransactionService {
         BankAccount sourceAccount = bankAccountService.findById(sourceAccountId);
         BankAccount destinationAccount = bankAccountService.findById(destinationAccountId);
         if (amount.compareTo(sourceAccount.getBalance()) > 0) {
-            throw new RuntimeException("Not enough money to transfer");
+            throw new NotEnoughMoneyException("Not enough money to transfer");
         }
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);

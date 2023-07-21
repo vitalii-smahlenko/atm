@@ -20,7 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(AuthenticationController.class)
-class AuthenticationControllerTest {
+class AuthenticationExceptionControllerTest {
     private static final String USERNAME = "Vitalii";
     private static final String PASSWORD = "1234";
     @Autowired

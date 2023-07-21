@@ -1,5 +1,6 @@
 package com.gmail.smaglenko.atmapp.service.impl;
 
+import com.gmail.smaglenko.atmapp.exception.AuthenticationException;
 import com.gmail.smaglenko.atmapp.model.Role;
 import com.gmail.smaglenko.atmapp.model.Role.RoleName;
 import com.gmail.smaglenko.atmapp.model.User;
@@ -24,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public User register(String username, String password) {
         Optional<User> userFromDb = userService.findByUsername(username);
         if (userFromDb.isPresent()) {
-            throw new RuntimeException("The user with this name already exists");
+            throw new AuthenticationException("The user with this name already exists");
         }
         Role role = roleService.findByRoleName(RoleName.USER);
         if (role == null) {
@@ -44,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Optional<User> userFromDb = userService.findByUsername(username);
         if (userFromDb.isEmpty()
                 || userFromDb.get().getPassword().equals(passwordEncoder.encode(password))) {
-            throw new RuntimeException("Incorrect username or password!!!");
+            throw new AuthenticationException("Incorrect username or password!!!");
         }
         return userFromDb.get();
     }

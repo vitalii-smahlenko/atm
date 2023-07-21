@@ -5,6 +5,7 @@ import com.gmail.smaglenko.atmapp.model.User;
 import com.gmail.smaglenko.atmapp.repository.BankAccountRepository;
 import com.gmail.smaglenko.atmapp.service.BankAccountService;
 import com.gmail.smaglenko.atmapp.service.UserService;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public BankAccount findById(Long bankAccountId) {
         return repository.findById(bankAccountId).orElseThrow(
-                () -> new RuntimeException("Can't find Bank Account by ID " + bankAccountId)
+                () -> new NoSuchElementException("Can't find Bank Account by ID " + bankAccountId)
         );
     }
 }

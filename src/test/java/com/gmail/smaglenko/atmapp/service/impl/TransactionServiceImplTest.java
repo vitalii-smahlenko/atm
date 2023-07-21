@@ -1,5 +1,6 @@
 package com.gmail.smaglenko.atmapp.service.impl;
 
+import com.gmail.smaglenko.atmapp.exception.NotEnoughMoneyException;
 import com.gmail.smaglenko.atmapp.model.BankAccount;
 import com.gmail.smaglenko.atmapp.model.Transaction;
 import com.gmail.smaglenko.atmapp.repository.TransactionRepository;
@@ -46,7 +47,7 @@ class TransactionServiceImplTest {
         when(bankAccountService.findById(SOURCE_ACCOUNT_ID)).thenReturn(sourceAccount);
         when(bankAccountService.findById(DESTINATION_ACCOUNT_ID)).thenReturn(destinationAccount);
 
-        assertThrows(RuntimeException.class,
+        assertThrows(NotEnoughMoneyException.class,
                 () -> transactionService
                         .transferMoney(SOURCE_ACCOUNT_ID, DESTINATION_ACCOUNT_ID, amount)
         );

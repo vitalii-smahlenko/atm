@@ -1,5 +1,6 @@
 package com.gmail.smaglenko.atmapp.service.impl;
 
+import com.gmail.smaglenko.atmapp.exception.AuthenticationException;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class AuthenticationServiceImplTest {
+class AuthenticationExceptionServiceImplTest {
     private static final Long ID = 1L;
     private static final String USERNAME = "Vitalii";
     private static final String PASSWORD = "1234";
@@ -59,7 +60,7 @@ class AuthenticationServiceImplTest {
     void register_shouldThrowException_whenUserWithThatUsernameExist() {
         when(userService.findByUsername(USERNAME)).thenReturn(Optional.of(expected));
 
-        assertThrows(RuntimeException.class,
+        assertThrows(AuthenticationException.class,
                 () -> authenticationService.register(USERNAME, PASSWORD)
         );
     }
@@ -75,7 +76,7 @@ class AuthenticationServiceImplTest {
 
     @Test
     void login_shouldThrowsException_whenIncorrectCredentials() {
-        assertThrows(RuntimeException.class,
+        assertThrows(AuthenticationException.class,
                 () -> authenticationService.login(USERNAME, PASSWORD)
         );
     }

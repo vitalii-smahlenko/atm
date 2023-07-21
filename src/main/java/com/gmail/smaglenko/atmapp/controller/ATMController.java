@@ -2,6 +2,7 @@ package com.gmail.smaglenko.atmapp.controller;
 
 import com.gmail.smaglenko.atmapp.dto.ATMDto;
 import com.gmail.smaglenko.atmapp.dto.BanknoteDto;
+import com.gmail.smaglenko.atmapp.model.Banknote;
 import com.gmail.smaglenko.atmapp.service.ATMService;
 import com.gmail.smaglenko.atmapp.util.mapper.ATMDtoMapper;
 import com.gmail.smaglenko.atmapp.util.mapper.BanknoteDtoMapper;
@@ -42,7 +43,7 @@ public class ATMController {
                 banknotes.stream()
                         .map(banknoteDtoMapper::mapToModel)
                         .collect(Collectors.toList()));
-        return ResponseEntity.ok("ATM replenished successfully") ;
+        return ResponseEntity.ok("ATM replenished successfully");
     }
 
     @ApiOperation(value = "Deposit money to a bank account via ATM",
@@ -68,12 +69,16 @@ public class ATMController {
         return ResponseEntity.ok("The operation was successful!");
     }
 
-    @ApiOperation(value = "Get information about which banknotes are in the ATM",
-            response = BanknoteDto.class)
+    @ApiOperation(value = "Get information about which banknotes are in the ATM")
     @GetMapping("/get-all-banknotes/{atmId}")
-    public List<BanknoteDto> getAllBanknotes(@PathVariable Long atmId) {
-        return atmService.getAllBanknotes(atmId).stream()
+    public ResponseEntity<List<BanknoteDto>> getAllBanknotes(@PathVariable Long atmId) {
+        List<Banknote> banknotes = atmService.getAllBanknotes(atmId);
+        if (banknotes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        List<BanknoteDto> banknoteDtos = banknotes.stream()
                 .map(banknoteDtoMapper::mapToDto)
                 .collect(Collectors.toList());
+        return ResponseEntity.ok(banknoteDtos);
     }
 }

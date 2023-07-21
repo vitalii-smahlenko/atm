@@ -1,5 +1,8 @@
 package com.gmail.smaglenko.atmapp.service.impl;
 
+import com.gmail.smaglenko.atmapp.exception.InvalidAmountException;
+import com.gmail.smaglenko.atmapp.exception.InvalidBanknoteAmountException;
+import com.gmail.smaglenko.atmapp.exception.NotEnoughMoneyException;
 import com.gmail.smaglenko.atmapp.model.ATM;
 import com.gmail.smaglenko.atmapp.model.BankAccount;
 import com.gmail.smaglenko.atmapp.model.Banknote;
@@ -10,6 +13,7 @@ import com.gmail.smaglenko.atmapp.service.BanknoteService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,10 +46,10 @@ public class ATMServiceImpl implements ATMService {
     @Transactional
     public void addBanknotesToATM(Long atmId, List<Banknote> banknotes) {
         ATM atmFromDb = repository.findById(atmId)
-                .orElseThrow(() -> new RuntimeException("ATM not found"));
+                .orElseThrow(() -> new NoSuchElementException("ATM not found"));
         for (Banknote banknote : banknotes) {
             if (!BANKNOTES_ACCEPTED_BY_ATM.contains(banknote.getValue())) {
-                throw new RuntimeException("An invalid amount. The amount must be a multiple"
+                throw new InvalidAmountException("An invalid amount. The amount must be a multiple"
                         + " of 100, 200, 500.");
             }
         }
@@ -72,17 +76,17 @@ public class ATMServiceImpl implements ATMService {
     public void withdraw(Long atmId, Long bankAccountId, Integer amount) {
         Integer atmBalance = getATMBalance(atmId);
         if (atmBalance < amount) {
-            throw new RuntimeException("Sorry, the transaction could not be completed due to "
+            throw new NotEnoughMoneyException("Sorry, the transaction could not be completed due to "
                     + "not enough money in the ATM. Insufficient funds, try withdrawing "
                     + "a smaller amount.");
         }
         ATM atm = findById(atmId);
         BankAccount bankAccount = bankAccountService.findById(bankAccountId);
         if (bankAccount.getBalance().intValue() < amount) {
-            throw new RuntimeException("There is not enough money in the account");
+            throw new NotEnoughMoneyException("There is not enough money in the account");
         }
         if (!isAmountMultipleOfAvailableBanknotes(amount)) {
-            throw new RuntimeException("An invalid amount. The amount must be a multiple"
+            throw new InvalidAmountException("An invalid amount. The amount must be a multiple"
                     + " of 100, 200, 500.");
         }
         List<Banknote> banknotes = getBanknotesOnAmount(atm.getBanknotes(), amount);
@@ -94,7 +98,7 @@ public class ATMServiceImpl implements ATMService {
     @Override
     public ATM findById(Long id) {
         return repository.findById(id).orElseThrow(
-                () -> new RuntimeException("Can't find ATM by ID" + id)
+                () -> new NoSuchElementException("Can't find ATM by ID" + id)
         );
     }
 
@@ -109,7 +113,7 @@ public class ATMServiceImpl implements ATMService {
             }
         }
         if (balanceAmount > 0) {
-            throw new RuntimeException("This amount can't be collected from the banknotes "
+            throw new InvalidBanknoteAmountException("This amount can't be collected from the banknotes "
                     + "available at the ATM. Try a different amount.");
         }
         return result;

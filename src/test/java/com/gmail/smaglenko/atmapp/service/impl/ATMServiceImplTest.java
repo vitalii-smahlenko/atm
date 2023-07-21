@@ -1,14 +1,17 @@
 package com.gmail.smaglenko.atmapp.service.impl;
 
-import com.gmail.smaglenko.atmapp.model.BankAccount;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
+import com.gmail.smaglenko.atmapp.exception.InvalidAmountException;
+import com.gmail.smaglenko.atmapp.exception.InvalidBanknoteAmountException;
+import com.gmail.smaglenko.atmapp.exception.NotEnoughMoneyException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+import com.gmail.smaglenko.atmapp.model.BankAccount;
 import com.gmail.smaglenko.atmapp.model.ATM;
 import com.gmail.smaglenko.atmapp.model.Banknote;
 import com.gmail.smaglenko.atmapp.repository.ATMRepository;
@@ -75,7 +78,7 @@ class ATMServiceImplTest {
 
         when(repository.findById(ID)).thenReturn(Optional.of(atm));
 
-        assertThrows(RuntimeException.class,
+        assertThrows(InvalidAmountException.class,
                 () -> atmService.addBanknotesToATM(ID, banknotes)
         );
     }
@@ -103,7 +106,7 @@ class ATMServiceImplTest {
         when(bankAccountService.findById(ID)).thenReturn(bankAccount);
         when(repository.findById(ID)).thenReturn(Optional.of(atm));
 
-        assertThrows(RuntimeException.class,
+        assertThrows(InvalidAmountException.class,
                 () -> atmService.deposit(ID, ID, banknotes)
         );
     }
@@ -140,7 +143,7 @@ class ATMServiceImplTest {
         when(repository.findById(ID)).thenReturn(Optional.of(atm));
         when(bankAccountService.findById(ID)).thenReturn(bankAccount);
 
-        assertThrows(RuntimeException.class,
+        assertThrows(NotEnoughMoneyException.class,
                 () -> atmService.withdraw(ID, ID, amount)
         );
     }
@@ -157,7 +160,7 @@ class ATMServiceImplTest {
         when(repository.findById(ID)).thenReturn(Optional.of(atm));
         when(bankAccountService.findById(ID)).thenReturn(bankAccount);
 
-        assertThrows(RuntimeException.class,
+        assertThrows(InvalidBanknoteAmountException.class,
                 () -> atmService.withdraw(ID, ID, amount)
         );
     }
@@ -172,7 +175,7 @@ class ATMServiceImplTest {
 
         when(atmService.getATMBalance(ID)).thenReturn(atmBalance);
 
-        assertThrows(RuntimeException.class,
+        assertThrows(NotEnoughMoneyException.class,
                 () -> atmService.withdraw(ID, ID, amount)
         );
     }
@@ -189,7 +192,7 @@ class ATMServiceImplTest {
         when(repository.findById(ID)).thenReturn(Optional.of(atm));
         when(bankAccountService.findById(ID)).thenReturn(bankAccount);
 
-        assertThrows(RuntimeException.class,
+        assertThrows(InvalidAmountException.class,
                 () -> atmService.withdraw(ID, ID, amount)
         );
     }
