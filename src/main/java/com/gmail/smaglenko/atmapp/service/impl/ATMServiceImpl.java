@@ -2,6 +2,7 @@ package com.gmail.smaglenko.atmapp.service.impl;
 
 import com.gmail.smaglenko.atmapp.exception.InvalidAmountException;
 import com.gmail.smaglenko.atmapp.exception.InvalidBanknoteAmountException;
+import com.gmail.smaglenko.atmapp.exception.InvalidBanknoteException;
 import com.gmail.smaglenko.atmapp.exception.NotEnoughMoneyException;
 import com.gmail.smaglenko.atmapp.model.ATM;
 import com.gmail.smaglenko.atmapp.model.BankAccount;
@@ -62,13 +63,19 @@ public class ATMServiceImpl implements ATMService {
     @Override
     @Transactional
     public void deposit(Long atmId, Long bankAccountId, List<Banknote> banknotes) {
+        int currentNumberBanknotesInAtm = getAllBanknotes(atmId).size();
         BankAccount bankAccount = bankAccountService.findById(bankAccountId);
         addBanknotesToATM(atmId, banknotes);
         for (Banknote banknote : banknotes) {
             bankAccount.setBalance(bankAccount.getBalance()
                     .add(new BigDecimal(banknote.getValue())));
         }
-        bankAccountService.update(bankAccount);
+        int numberBanknotesAfterDeposit = getAllBanknotes(atmId).size();
+        if (numberBanknotesAfterDeposit == (currentNumberBanknotesInAtm + banknotes.size())) {
+            bankAccountService.update(bankAccount);
+        } else {
+            throw new InvalidBanknoteException("ATM not accepting banknotes!");
+        }
     }
 
     @Override
