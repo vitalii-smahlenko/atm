@@ -63,6 +63,7 @@ Technologies
   - Core
   - Security
   - Web MVC
+- H2 Database
 - Junit 5
 - Mockito
 - Lombok
